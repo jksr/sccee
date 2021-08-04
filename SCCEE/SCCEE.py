@@ -1,5 +1,4 @@
-
-m pynndescent import NNDescent
+from pynndescent import NNDescent
 import scipy.stats as ss
 import scipy.spatial.distance as ssd
 import numpy as np
@@ -58,17 +57,17 @@ class SCCEE:
             flt_dist_list.append(dists[sels])
             flt_pseudos.append(pseudo)
             
-        pseudo_portions = self._construct_portion_matrices(flt_nbr_list, conddf, cond)
+        pseudo_portions = self._construct_portion_matrices(flt_nbr_list, self.conddf, cond)
         pseudo_pdists = self._compute_pair_distances(pseudo_portions)
           
         
         # background portions and pdists
         rand_pdists = []
         for i in range(n_permuts):
-            randdf = self.conddf.sample(frac=1, random_state=random_state+i)
+            #randdf = self.conddf.sample(frac=1, random_state=random_state+i) ##TODO only n_permuts=1 is supported for now
+            randdf = self.conddf.sample(frac=1, random_state=random_state)
             rand_portions = self._construct_portion_matrices(flt_nbr_list, randdf, cond)
             rand_pdists.append( self._compute_pair_distances(rand_portions) )     
-#             rand_pdists.extend( self._compute_pair_distances(rand_portions) )     
         
         
         
